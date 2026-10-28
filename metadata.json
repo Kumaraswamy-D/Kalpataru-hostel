@@ -1,0 +1,6 @@
+{
+  "name": "Kalpataru Hostel",
+  "description": "Hostel management system for room allocation, billing, complaints, and student records.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

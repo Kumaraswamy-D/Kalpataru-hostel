@@ -1,0 +1,201 @@
+{
+  "entities": {
+    "UserRecord": {
+      "title": "UserRecord",
+      "description": "Registered user account record with assigned role",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" }
+      },
+      "required": ["email", "name", "role", "createdAt"]
+    },
+    "StudentProfile": {
+      "title": "StudentProfile",
+      "description": "Student details including academic year, department, and room assignment",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "mobileNumber": { "type": "string" },
+        "academicYear": { "type": "string", "enum": ["First Year", "Second Year", "Third Year", "Fourth Year"] },
+        "branch": { "type": "string" },
+        "roomAllocationStatus": { "type": "string", "enum": ["unallocated", "allocated"] },
+        "block": { "type": "string" },
+        "roomNumber": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "fullName", "email", "mobileNumber", "academicYear", "branch", "roomAllocationStatus", "block", "roomNumber", "photoUrl", "updatedAt"]
+    },
+    "Room": {
+      "title": "Room",
+      "description": "Hostel room with maximum 2-bed occupancy",
+      "type": "object",
+      "properties": {
+        "block": { "type": "string", "enum": ["Hemavati Block", "Kaveri Block", "MCA Block"] },
+        "roomNumber": { "type": "string" },
+        "capacity": { "type": "integer" },
+        "occupiedBeds": { "type": "integer" },
+        "studentIds": { "type": "array" },
+        "isAvailable": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" }
+      },
+      "required": ["block", "roomNumber", "capacity", "occupiedBeds", "studentIds", "isAvailable", "updatedAt"]
+    },
+    "RoomAllocation": {
+      "title": "RoomAllocation",
+      "description": "Allocation record linking a student to a room",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "academicYear": { "type": "string" },
+        "branch": { "type": "string" },
+        "block": { "type": "string" },
+        "roomNumber": { "type": "string" },
+        "allocatedAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" }
+      },
+      "required": ["studentId", "studentName", "academicYear", "branch", "block", "roomNumber", "allocatedAt"]
+    },
+    "Bill": {
+      "title": "Bill",
+      "description": "Hostel room fee or mess fee bill",
+      "type": "object",
+      "properties": {
+        "billRef": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "billType": { "type": "string", "enum": ["Room Fee", "Mess Fee"] },
+        "billingPeriod": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "amountPaid": { "type": "number" },
+        "balanceAmount": { "type": "number" },
+        "dueDate": { "type": "string" },
+        "paymentStatus": { "type": "string", "enum": ["Pending", "Partially Paid", "Paid", "Overdue"] },
+        "remarks": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" }
+      },
+      "required": ["billRef", "studentId", "studentName", "billType", "billingPeriod", "totalAmount", "amountPaid", "balanceAmount", "dueDate", "paymentStatus", "remarks", "createdAt", "updatedAt"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Online or manual payment record for a bill",
+      "type": "object",
+      "properties": {
+        "receiptRef": { "type": "string" },
+        "billId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "billType": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentDate": { "type": "string" },
+        "paymentMethod": { "type": "string", "enum": ["Cash", "Bank Transfer", "UPI", "Online"] },
+        "transactionRef": { "type": "string" },
+        "remarks": { "type": "string" },
+        "status": { "type": "string", "enum": ["Verified", "Pending", "Failed"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" }
+      },
+      "required": ["receiptRef", "billId", "studentId", "studentName", "billType", "amount", "paymentDate", "paymentMethod", "transactionRef", "remarks", "status", "createdAt"]
+    },
+    "Complaint": {
+      "title": "Complaint",
+      "description": "Student complaint record and administrative resolution",
+      "type": "object",
+      "properties": {
+        "complaintRef": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "academicYear": { "type": "string" },
+        "branch": { "type": "string" },
+        "block": { "type": "string" },
+        "roomNumber": { "type": "string" },
+        "mobileNumber": { "type": "string" },
+        "category": { "type": "string", "enum": ["Room maintenance", "Electricity", "Water supply", "Bathroom", "Cleaning", "Mess food", "Furniture", "Other"] },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["Submitted", "In Progress", "Resolved", "Rejected"] },
+        "adminResponse": { "type": "string" },
+        "submittedAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" }
+      },
+      "required": ["complaintRef", "studentId", "studentName", "academicYear", "branch", "block", "roomNumber", "mobileNumber", "category", "title", "description", "photoUrl", "status", "adminResponse", "submittedAt", "updatedAt"]
+    },
+    "SmsReminder": {
+      "title": "SmsReminder",
+      "description": "Log of SMS reminder sent for pending fee",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "mobileNumber": { "type": "string" },
+        "billId": { "type": "string" },
+        "billType": { "type": "string" },
+        "amount": { "type": "number" },
+        "dueDate": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["Sent", "Failed", "Pending", "Delivered"] },
+        "providerResponse": { "type": "string" },
+        "sentAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" }
+      },
+      "required": ["studentId", "studentName", "mobileNumber", "billId", "billType", "amount", "dueDate", "message", "status", "providerResponse", "sentAt"]
+    },
+    "NotificationItem": {
+      "title": "NotificationItem",
+      "description": "In-app notification for students or administrators",
+      "type": "object",
+      "properties": {
+        "recipientId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["BILL", "COMPLAINT", "ALLOCATION", "GENERAL"] },
+        "isRead": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "FieldValue.serverTimestamp()" }
+      },
+      "required": ["recipientId", "title", "message", "type", "isRead", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserRecord" },
+      "description": "Stores user roles and core credentials"
+    },
+    "/studentProfiles/{userId}": {
+      "schema": { "$ref": "#/entities/StudentProfile" },
+      "description": "Detailed student profiles"
+    },
+    "/rooms/{roomId}": {
+      "schema": { "$ref": "#/entities/Room" },
+      "description": "Hostel room inventory"
+    },
+    "/roomAllocations/{allocationId}": {
+      "schema": { "$ref": "#/entities/RoomAllocation" },
+      "description": "Room allocation assignments"
+    },
+    "/bills/{billId}": {
+      "schema": { "$ref": "#/entities/Bill" },
+      "description": "Fee billing records"
+    },
+    "/payments/{paymentId}": {
+      "schema": { "$ref": "#/entities/Payment" },
+      "description": "Payment transactions and receipts"
+    },
+    "/complaints/{complaintId}": {
+      "schema": { "$ref": "#/entities/Complaint" },
+      "description": "Complaints filed by students"
+    },
+    "/smsReminders/{reminderId}": {
+      "schema": { "$ref": "#/entities/SmsReminder" },
+      "description": "SMS reminder records"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/NotificationItem" },
+      "description": "In-app notifications"
+    }
+  }
+}
